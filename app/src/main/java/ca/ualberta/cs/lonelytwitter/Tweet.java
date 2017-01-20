@@ -6,8 +6,8 @@ import java.util.Date;
  */
 
 public abstract class Tweet implements Tweetable {
-    public Date date;
-    public String message;
+    private Date date;
+    private String message;
 //    private String hiddenstring;
 
     public Tweet(Date date, String message) throws TweetTooLongException {

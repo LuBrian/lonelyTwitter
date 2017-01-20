@@ -7,8 +7,8 @@ import java.util.Date;
  */
 
 public abstract class Mood {
-    public Date date;
-    public String currentMood;
+    private Date date;
+    private String currentMood;
 
     public Mood(Date date, String currentMood) throws MoodTooLongException {
         this.date = date;

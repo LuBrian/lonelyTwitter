@@ -10,16 +10,16 @@ public abstract class Tweet implements Tweetable {
     private String message;
 //    private String hiddenstring;
 
-    public Tweet(Date date, String message) throws TweetTooLongException {
+    public Tweet(Date date, String message){
         this.date = date;
-//        this.message = message;
-        this.setMessage(message);
+        this.message = message;
+//        this.setMessage(message);
 
     }
 
-    public Tweet(String message) throws TweetTooLongException {
-//        this.message = message;
-        this.setMessage(message);
+    public Tweet(String message){
+        this.message = message;
+//        this.setMessage(message);
         this.date = new Date(); // current time and date
     }
 
@@ -45,5 +45,10 @@ public abstract class Tweet implements Tweetable {
         } else {
             this.message = message;
         }
+    }
+
+    @Override
+    public String toString(){
+        return date.toString() + " | " + message;
     }
 }

@@ -44,6 +44,7 @@ public class LonelyTwitterActivity extends Activity {
 
 		bodyText = (EditText) findViewById(R.id.body);
 		Button saveButton = (Button) findViewById(R.id.save);
+		Button clearButton = (Button) findViewById(R.id.clear);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 
@@ -53,22 +54,6 @@ public class LonelyTwitterActivity extends Activity {
 				Tweet tweet = new NormalTweet(text);
 				tweetList.add(tweet);
 				adapter.notifyDataSetChanged();
-
-//				Tweet tweet =  new ImportantTweet("First tweet");
-//				NormalTweet normalTweet = new NormalTweet("test string")
-//				try {
-//					if (tweet.isImportant())
-//						tweet.setMessage("better string");
-//
-//
-//				} catch (Exception e){
-//					throw new RuntimeException();
-//				}
-//
-//				ArrayList<Tweet> arrayList =  new ArrayList<Tweet>();
-//				arrayList.add(tweet);
-//				arrayList.add(normalTweet);
-
 				saveInFile();
 //				finish();
 			}
@@ -96,7 +81,7 @@ public class LonelyTwitterActivity extends Activity {
 			Gson gson  = new Gson();
 			// Taken from http://stackoverflow.com/questions/12384064/gson-convert-from-json-to-a-typed-arraylistt
 			// 2017-01-24 18:19
-			Type listType = new TypeToken<ArrayList<Tweet>>(){}.getType();
+			Type listType = new TypeToken<ArrayList<NormalTweet>>(){}.getType();
 			tweetList = gson.fromJson(in,listType);
 
 

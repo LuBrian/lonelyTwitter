@@ -31,16 +31,29 @@
         android:layout_height="wrap_content"
         android:scrollbars="horizontal" />
 
-    <Button
-        android:id="@+id/clear"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/clear" />
+        android:weightSum="3">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sText"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/search"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/search"
+            android:layout_weight="2" />
+    </LinearLayout>
 
     <Button
         android:id="@+id/save"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/save" />
+
+
 
 </LinearLayout>

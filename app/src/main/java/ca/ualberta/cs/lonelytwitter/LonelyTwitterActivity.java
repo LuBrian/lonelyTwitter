@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class LonelyTwitterActivity extends Activity {
+	private LonelyTwitterActivity activity = this;
 
 	private static final String FILENAME = "file.sav";
 	private EditText bodyText;
@@ -34,6 +35,9 @@ public class LonelyTwitterActivity extends Activity {
 	private ListView oldTweetsList;
 	private ArrayList<NormalTweet> tweetList = new ArrayList<NormalTweet>();
 	private ArrayAdapter<NormalTweet> adapter;
+	public ListView getOldTweetsList(){
+		return oldTweetsList;
+	}
 	private String searchText;
 
 
@@ -46,8 +50,8 @@ public class LonelyTwitterActivity extends Activity {
 		bodyText = (EditText) findViewById(R.id.body);
 		sText = (EditText) findViewById((R.id.sText));
 		Button saveButton = (Button) findViewById(R.id.save);
-//		Button clearButton = (Button) findViewById(R.id.clear);
-		Button searchButton = (Button) findViewById(R.id.search);
+		Button clearButton = (Button) findViewById(R.id.clear);
+//		Button searchButton = (Button) findViewById(R.id.search);
 		oldTweetsList = (ListView) findViewById(R.id.oldTweetsList);
 
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -64,38 +68,50 @@ public class LonelyTwitterActivity extends Activity {
 			}
 		});
 
-		searchButton.setOnClickListener(new View.OnClickListener(){
-			public void onClick(View v){
+//		searchButton.setOnClickListener(new View.OnClickListener(){
+//			public void onClick(View v){
+//				setResult(RESULT_OK);
+//				searchText = sText.getText().toString();
+//
+//				ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
+//				getTweetsTask.execute(searchText);
+//				try{
+//					tweetList.clear();
+//					tweetList.addAll(getTweetsTask.get());
+//					Log.i("number of tweets", "" + tweetList.size());
+//
+//				}catch(Exception e){
+//					Log.i("Error","Failed to get the tweets from the async object");
+//				}
+//				adapter.notifyDataSetChanged();
+//
+//			}
+//
+//
+//		});
+
+
+		clearButton.setOnClickListener(new View.OnClickListener() {
+
+			public void onClick(View v) {
 				setResult(RESULT_OK);
-				searchText = sText.getText().toString();
-
-				ElasticsearchTweetController.GetTweetsTask getTweetsTask = new ElasticsearchTweetController.GetTweetsTask();
-				getTweetsTask.execute(searchText);
-				try{
-					tweetList.clear();
-					tweetList.addAll(getTweetsTask.get());
-					Log.i("number of tweets", "" + tweetList.size());
-
-				}catch(Exception e){
-					Log.i("Error","Failed to get the tweets from the async object");
-				}
+				tweetList.clear();
+				deleteFile(FILENAME);  // TODO deprecate this button
 				adapter.notifyDataSetChanged();
-
 			}
-
-
 		});
 
-
-//		clearButton.setOnClickListener(new View.OnClickListener() {
-//
-//			public void onClick(View v) {
-//				setResult(RESULT_OK);
-//				tweetList.clear();
-//				deleteFile(FILENAME);  // TODO deprecate this button
-//				adapter.notifyDataSetChanged();
-//			}
-//		});
+		oldTweetsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				Intent intent = new Intent(activity, EditTweetActivity.class);
+				Tweet tweet = tweetList.get(position);
+				String date = tweet.getDate().toString();
+				String message = tweet.getMessage();
+				intent.putExtra("aString",message);
+				intent.putExtra("aDate",date);
+				startActivity(intent);
+			}
+		});
 
 
 	}
